@@ -26,6 +26,10 @@
 		4735FE1C2174C2DD008D2980 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4735FE222174C555008D2980 /* FriendsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsViewController.swift; sourceTree = "<group>"; };
 		4735FE242174C588008D2980 /* FriendsControllerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsControllerHelper.swift; sourceTree = "<group>"; };
+		477A635A217598FC00C23E97 /* Friend+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataClass.swift"; sourceTree = "<group>"; };
+		477A635B217598FC00C23E97 /* Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		477A635C217598FC00C23E97 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
+		477A635D217598FC00C23E97 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +62,10 @@
 		4735FE0C2174C2DB008D2980 /* MyMessenger */ = {
 			isa = PBXGroup;
 			children = (
+				477A635A217598FC00C23E97 /* Friend+CoreDataClass.swift */,
+				477A635B217598FC00C23E97 /* Friend+CoreDataProperties.swift */,
+				477A635C217598FC00C23E97 /* Message+CoreDataClass.swift */,
+				477A635D217598FC00C23E97 /* Message+CoreDataProperties.swift */,
 				4735FE0D2174C2DB008D2980 /* AppDelegate.swift */,
 				4735FE112174C2DB008D2980 /* Main.storyboard */,
 				4735FE172174C2DD008D2980 /* Assets.xcassets */,
