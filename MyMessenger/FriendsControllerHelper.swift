@@ -11,16 +11,16 @@ import CoreData
 //}
 extension FriendViewController{
     func clearData(){
-    
+        
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let context = delegate.persistentContainer.viewContext
         
         do{
-//            let entities = ["Friend"]
+            //            let entities = ["Friend"]
             
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Friend")
             let friends = try context.fetch(fetchRequest) as! [NSManagedObject]
-            print("while deleting \(friends.count)")
+            
             
             for friend in friends{
                 context.delete(friend)
@@ -50,13 +50,15 @@ extension FriendViewController{
         mark.profileImageName = "mark"
         createMessageWithText(text: "Hello My name is Zuckerberg", friend: mark, minutesAgo: 4, context: context)
         
-//
-//
+        //
+        //
         let steveEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
         let steve = NSManagedObject(entity: steveEntity, insertInto: context) as! Friend
         steve.name = "Steve Jobs"
         steve.profileImageName = "steve"
         
+        createMessageWithText(text: "Good Morning", friend: steve, minutesAgo: 8, context: context)
+        createMessageWithText(text: "Hello How are you..", friend: steve, minutesAgo: 8, context: context)
         createMessageWithText(text: "Apple Creates Innovative Products", friend: steve, minutesAgo: 8, context: context)
         
         let gandhiEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
@@ -79,32 +81,53 @@ extension FriendViewController{
     }
     
     func loadData(){
+        
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        messages = [Message]()
+        guard let friends = fetchFriends() else {return}
+        for friend in friends{
+            
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: false)]
+            fetchRequest.predicate = NSPredicate(format: "friend.name == %@", friend.name!)
+            fetchRequest.fetchLimit = 1
+            
+            do {
+                let fetchedMessages = try context.fetch(fetchRequest) as? [Message]
+                messages = messages! + fetchedMessages!
+//                messages?.append(contentsOf: <#T##Sequence#>)
+                
+            } catch {
+                
+                print("Failed")
+            }
+            
+        }
+    }
     
+    private func fetchFriends() -> [Friend]?{
         let delegate = UIApplication.shared.delegate as! AppDelegate
         let context = delegate.persistentContainer.viewContext
         
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Message")
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Friend")
         do {
-            messages = try context.fetch(fetchRequest) as? [Message]
+            return try context.fetch(fetchRequest) as? [Friend]
             
-            print(messages?.count)
             
         } catch {
-            
-            print("Failed")
+            return nil
         }
-    
     }
     
     
     private func createMessageWithText(text: String, friend: Friend, minutesAgo: Double, context: NSManagedObjectContext){
-        
-        print("while adding frined name \(friend.name)")
         let gandhimessageEntity = NSEntityDescription.entity(forEntityName: "Message", in: context)!
         let gandhimessage = NSManagedObject(entity: gandhimessageEntity, insertInto: context) as! Message
-        gandhimessage.text = "Peace.. "
+        gandhimessage.text = text
         gandhimessage.date = Date().addingTimeInterval(-minutesAgo * 60)
-//            .addingTimeInterval(-minutesAgo)
+        //            .addingTimeInterval(-minutesAgo)
         gandhimessage.friend = friend
         
     }
