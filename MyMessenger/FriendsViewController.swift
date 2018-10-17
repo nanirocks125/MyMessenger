@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 
 class FriendViewController: UICollectionViewController,UICollectionViewDelegateFlowLayout {
@@ -24,6 +25,15 @@ class FriendViewController: UICollectionViewController,UICollectionViewDelegateF
         
     }
     
+    
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let layout = UICollectionViewFlowLayout()
+        let chatLogViewController = ChatLogController(collectionViewLayout: layout)
+        chatLogViewController.friend = messages?[indexPath.row].friend
+        
+        navigationController?.pushViewController(chatLogViewController, animated: true)
+        
+    }
     
     
     
@@ -43,6 +53,8 @@ class FriendViewController: UICollectionViewController,UICollectionViewDelegateF
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        
         return CGSize(width: view.bounds.width, height: 100)
     }
     
@@ -57,6 +69,15 @@ class FriendViewController: UICollectionViewController,UICollectionViewDelegateF
 
 class MessageCell: BaseCell {
     
+    override var isHighlighted: Bool{
+        didSet{
+            backgroundColor = isHighlighted ? .blue : .white
+            messageLabel.textColor = isHighlighted ? .white : .black
+            nameLabel.textColor = isHighlighted ? .white : .black
+            timeLabel.textColor = isHighlighted ? .white : .black
+        }
+    }
+    
     var message: Message? {
         didSet{
             nameLabel.text = message?.friend?.name
@@ -68,6 +89,17 @@ class MessageCell: BaseCell {
                 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "h:mm a"
+                
+                let elapsedTimeInSeconds = Date().timeIntervalSince(date)
+                
+                let secondsInDate:TimeInterval = TimeInterval(exactly: 24 * 60 * 60)!
+                
+                if elapsedTimeInSeconds > 7 * secondsInDate{
+                    dateFormatter.dateFormat = "dd/MM/yyy"
+                }else if elapsedTimeInSeconds > secondsInDate{
+                    dateFormatter.dateFormat = "EEE"
+                }
+                
                 timeLabel.text = dateFormatter.string(from: date)
                 
             }
@@ -155,7 +187,7 @@ class MessageCell: BaseCell {
     private func setupContainerView(){
         let containerView: UIView = {
             let view = UIView()
-            view.backgroundColor = .white
+            
             return view
         }()
         

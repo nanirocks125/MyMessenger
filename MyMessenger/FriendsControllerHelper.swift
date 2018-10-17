@@ -44,29 +44,44 @@ extension FriendViewController{
         let context = delegate.persistentContainer.viewContext
         
         
-        let friendEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
-        let mark = NSManagedObject(entity: friendEntity, insertInto: context) as! Friend
+        let markEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
+        let mark = NSManagedObject(entity: markEntity, insertInto: context) as! Friend
         mark.name = "Mark Zuckerberg"
         mark.profileImageName = "mark"
-        createMessageWithText(text: "Hello My name is Zuckerberg", friend: mark, minutesAgo: 4, context: context)
+        FriendViewController.createMessageWithText(text: "Hello My name is Zuckerberg", isSender: true, friend: mark, minutesAgo: 4, context: context)
         
-        //
-        //
         let steveEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
         let steve = NSManagedObject(entity: steveEntity, insertInto: context) as! Friend
         steve.name = "Steve Jobs"
         steve.profileImageName = "steve"
         
-        createMessageWithText(text: "Good Morning", friend: steve, minutesAgo: 8, context: context)
-        createMessageWithText(text: "Hello How are you..", friend: steve, minutesAgo: 8, context: context)
-        createMessageWithText(text: "Apple Creates Innovative Products", friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Good Morning", isSender: true, friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Hello How are you.. Hope you are having a nice morning ", isSender: false, friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Apple Creates Innovative Products.. we have variety of products apple intrduces new 3 model iphone XS.XR. XSMax. are you interested in buying brand new mobile", isSender: true, friend: steve, minutesAgo: 8, context: context)
+        
+        
+        FriendViewController.createMessageWithText(text: "Good Morning", isSender: true, friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Hello How are you.. Hope you are having a nice morning ", isSender: false, friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Apple Creates Innovative Products.. we have variety of products apple intrduces new 3 model iphone XS.XR. XSMax. are you interested in buying brand new mobile", isSender: true, friend: steve, minutesAgo: 8, context: context)
+        
+        
+        FriendViewController.createMessageWithText(text: "Good Morning", isSender: true, friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Hello How are you.. Hope you are having a nice morning ", isSender: false, friend: steve, minutesAgo: 8, context: context)
+        FriendViewController.createMessageWithText(text: "Apple Creates Innovative Products.. we have variety of products apple intrduces new 3 model iphone XS.XR. XSMax. are you interested in buying brand new mobile", isSender: true, friend: steve, minutesAgo: 8, context: context)
         
         let gandhiEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
         let gandhi = NSManagedObject(entity: gandhiEntity, insertInto: context) as! Friend
         gandhi.name = "Mahatma Gandhi"
         gandhi.profileImageName = "gandhi"
         
-        createMessageWithText(text: "Peace...", friend: gandhi, minutesAgo: 2, context: context)
+        FriendViewController.createMessageWithText(text: "Peace...", isSender: true, friend: gandhi, minutesAgo: 60 * 24 , context: context)
+        
+        let hillaryEntity = NSEntityDescription.entity(forEntityName: "Friend", in: context)!
+        let hillary = NSManagedObject(entity: hillaryEntity, insertInto: context) as! Friend
+        hillary.name = "Hillary Clinton"
+        hillary.profileImageName = "hillary"
+        
+        FriendViewController.createMessageWithText(text: "Please vote for me", isSender: true, friend: hillary, minutesAgo: 60 * 24 * 8 , context: context)
         
         
         do{
@@ -97,7 +112,7 @@ extension FriendViewController{
             do {
                 let fetchedMessages = try context.fetch(fetchRequest) as? [Message]
                 messages = messages! + fetchedMessages!
-//                messages?.append(contentsOf: <#T##Sequence#>)
+                
                 
             } catch {
                 
@@ -105,6 +120,10 @@ extension FriendViewController{
             }
             
         }
+        
+        messages = messages?.sorted(by: { (mes1, mes2) -> Bool in
+            return (mes1.date?.compare(mes2.date!) == .orderedDescending)
+        })
     }
     
     private func fetchFriends() -> [Friend]?{
@@ -122,13 +141,14 @@ extension FriendViewController{
     }
     
     
-    private func createMessageWithText(text: String, friend: Friend, minutesAgo: Double, context: NSManagedObjectContext){
+    static public func createMessageWithText(text: String, isSender:Bool, friend: Friend, minutesAgo: Double, context: NSManagedObjectContext) -> Message{
         let gandhimessageEntity = NSEntityDescription.entity(forEntityName: "Message", in: context)!
         let gandhimessage = NSManagedObject(entity: gandhimessageEntity, insertInto: context) as! Message
         gandhimessage.text = text
         gandhimessage.date = Date().addingTimeInterval(-minutesAgo * 60)
         //            .addingTimeInterval(-minutesAgo)
         gandhimessage.friend = friend
-        
+        gandhimessage.isSender = isSender
+        return gandhimessage
     }
 }

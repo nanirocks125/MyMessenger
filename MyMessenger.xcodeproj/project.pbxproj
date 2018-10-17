@@ -14,6 +14,7 @@
 		4735FE1B2174C2DD008D2980 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4735FE192174C2DD008D2980 /* LaunchScreen.storyboard */; };
 		4735FE232174C555008D2980 /* FriendsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735FE222174C555008D2980 /* FriendsViewController.swift */; };
 		4735FE252174C588008D2980 /* FriendsControllerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4735FE242174C588008D2980 /* FriendsControllerHelper.swift */; };
+		477A63652175BCFC00C23E97 /* ChatLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A63642175BCFC00C23E97 /* ChatLogController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		477A635B217598FC00C23E97 /* Friend+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Friend+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		477A635C217598FC00C23E97 /* Message+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataClass.swift"; sourceTree = "<group>"; };
 		477A635D217598FC00C23E97 /* Message+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Message+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		477A63642175BCFC00C23E97 /* ChatLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatLogController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,7 @@
 				4735FE142174C2DB008D2980 /* MyMessenger.xcdatamodeld */,
 				4735FE222174C555008D2980 /* FriendsViewController.swift */,
 				4735FE242174C588008D2980 /* FriendsControllerHelper.swift */,
+				477A63642175BCFC00C23E97 /* ChatLogController.swift */,
 			);
 			path = MyMessenger;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477A63652175BCFC00C23E97 /* ChatLogController.swift in Sources */,
 				4735FE232174C555008D2980 /* FriendsViewController.swift in Sources */,
 				4735FE0E2174C2DB008D2980 /* AppDelegate.swift in Sources */,
 				4735FE162174C2DB008D2980 /* MyMessenger.xcdatamodeld in Sources */,
